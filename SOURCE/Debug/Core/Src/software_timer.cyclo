@@ -1,4 +1,2 @@
-../Core/Src/software_timer.c:18:6:settimer1	1
-../Core/Src/software_timer.c:23:6:settimer2	1
-../Core/Src/software_timer.c:28:6:settimer3	1
-../Core/Src/software_timer.c:34:6:timerrun	7
+../Core/Src/software_timer.c:14:6:settimer1	1
+../Core/Src/software_timer.c:20:6:timerrun	4

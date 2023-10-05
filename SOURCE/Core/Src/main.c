@@ -181,6 +181,7 @@ int main(void)
     	default : break;
     	}
     }
+  HAL_GPIO_WritePin(en1_GPIO_Port,en2_Pin, SET);
 
   /* USER CODE END Init */
 
@@ -201,33 +202,23 @@ HAL_TIM_Base_Start_IT(&htim2);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 settimer1(50);
-settimer2(50);
-settimer3(100);
-
-
   while (1)
   {
     /* USER CODE END WHILE */
-if(timer1_flag==1)
-{   settimer1(50);
-	display7SEG(1);
-
-}
-
-if(timer2_flag==1)
-{   settimer2(50);
-	display7SEG(2);
-
-}
-if(timer3_flag==1)
-{   settimer3(100);
-    HAL_GPIO_TogglePin(led_red_GPIO_Port, led_red_Pin);
-
-}
-
-
-
-
+	  if(timer1_flag==1)
+	  {
+	  	switch (status)
+	  	{
+	  	case 1 :
+	  		display7SEG(1);
+	  		break;
+	  	case 2 :
+	  			display7SEG(2);
+	  			break;
+	  	default : break;
+	  	}
+	  	settimer1(50);
+	  }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
