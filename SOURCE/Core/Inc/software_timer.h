@@ -12,6 +12,7 @@ extern int timer1_flag;
 extern int timer2_flag;
 extern int timer3_flag;
 extern int status ;
+extern int period_count ;
 void settimer1();
 void settimer2();
 void settimer3();

@@ -13,6 +13,7 @@ int timer2_counter=0;
 int timer2_flag=0;
 int timer3_counter=0;
 int timer3_flag=0;
+int period_count = 0;
 int status=0;
 
 
@@ -50,6 +51,7 @@ void timerrun()
 	{
 	         timer2_flag=1;
 	         status++;
+	         period_count++;
 	         if(status==0){status=1;}
 	         else if(status>4){status=1;}
 	}
@@ -61,6 +63,7 @@ void timerrun()
 	{
 	         timer3_flag=1;
 	}
+
 }
 
 

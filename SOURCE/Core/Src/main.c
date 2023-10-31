@@ -93,6 +93,52 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  const int MAX_LED = 4;
+   int index_led = 0;
+   int led_buffer [4] = {1 , 2 , 3 , 4};
+
+   if (period_count % 2 == 0)
+   {
+       update7SEG(index_led);
+   }
+   if (period_count % 2 == 1)
+   {
+   	HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+   }
+   void update7SEG ( int index )
+   {
+
+   switch ( index )
+   {
+   case 0:
+   // Display the first 7 SEG with led_buffer [0]
+ 	  HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, RESET);
+ 	  HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
+ 	  HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
+ 	  HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, SET);
+   break ;
+   case 1:
+ 	  HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, SET);
+ 	  HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, RESET);
+ 	  HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
+ 	  HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, SET);
+   break ;
+   case 2:
+ 	  HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, SET);
+ 	  HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
+ 	  HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, RESET);
+ 	  HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, SET);
+   break ;
+   case 3:
+ 	  HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, SET);
+ 	  HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
+ 	  HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
+ 	  HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, RESET);
+   break ;
+   default :
+   break ;
+   }
+   }
 
   void display7SEG(int n)
    {
@@ -191,42 +237,7 @@ int main(void)
 
    	}
    }
-  const int MAX_LED = 4;
-  int index_led = 0;
-  int led_buffer [4] = {1 , 2 , 3 , 4};
-  void update7SEG ( int index )
-  {
-  switch ( index )
-  {
-  case 0:
-  // Display the first 7 SEG with led_buffer [0]
-	  HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, RESET);
-	  HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
-	  HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
-	  HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, SET);
-  break ;
-  case 1:
-	  HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, SET);
-	  HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, RESET);
-	  HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
-	  HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, SET);
-  break ;
-  case 2:
-	  HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, SET);
-	  HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
-	  HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, RESET);
-	  HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, SET);
-  break ;
-  case 3:
-	  HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, SET);
-	  HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
-	  HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
-	  HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, RESET);
-  break ;
-  default :
-  break ;
-  }
-  }
+
 
    settimer1(100);
    settimer2(50);
