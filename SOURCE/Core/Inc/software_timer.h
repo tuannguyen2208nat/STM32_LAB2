@@ -9,9 +9,10 @@
 #define INC_SOFTWARE_TIMER_H_
 
 extern int timer1_flag;
-extern int status;
-
+extern int timer2_flag;
+extern int status ;
 void settimer1();
+void settimer2();
 void timerrun();
 
 #endif /* INC_SOFTWARE_TIMER_H_ */
