@@ -10,9 +10,11 @@
 
 extern int timer1_flag;
 extern int timer2_flag;
+extern int timer3_flag;
 extern int status ;
 void settimer1();
 void settimer2();
+void settimer3();
 void timerrun();
 
 #endif /* INC_SOFTWARE_TIMER_H_ */

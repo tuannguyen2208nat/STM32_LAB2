@@ -73,6 +73,7 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
+
   /* USER CODE BEGIN Init */
   /* USER CODE END Init */
 
@@ -193,35 +194,58 @@ int main(void)
 
    settimer1(100);
    settimer2(50);
+   settimer3(100);
   while (1)
   {
     /* USER CODE END WHILE */
-	 if(timer1_flag==1)
-	 {
-		 settimer1(100);
-		 HAL_GPIO_TogglePin(led_red_GPIO_Port, led_red_Pin);
-	 }
-	 if(timer2_flag==1)
-	 {
-		 settimer2(50);
-		 switch (status)
-		 {
-		 case 1 :
-			 HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, RESET);
-			 HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
-			 display7SEG(1);
-			 break;
-		 case 2 :
-			 HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, SET);
-			 HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, RESET);
-			 display7SEG(2);
-			 break;
-		 default :
-			 break;
-		 }
+	  if(timer1_flag==1)
+	 	 	 {
+	 	 		 settimer1(100);
+	 	 		 HAL_GPIO_TogglePin(led_red_GPIO_Port, led_red_Pin);
+	 	 	 }
+	 	 	 if(timer2_flag==1)
+	 	 	 {
+	 	 		 settimer2(50);
+	 	 		 switch (status)
+	 	 		 {
+	 	 		 case 1 :
+	 	 			 HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, RESET);
+	 	 			 HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
+	 	 			 HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
+	 	 			 HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, SET);
+	 	 			 display7SEG(1);
+	 	 			 break;
+	 	 		 case 2 :
+	 	 			 HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, SET);
+	 	 			 HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, RESET);
+	 	 			 HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
+	 	 			 HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, SET);
+	 	 			 display7SEG(2);
+	 	 			 break;
+	 	 		 case 3 :
+	 	 			HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, SET);
+	 	 			HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
+	 	 			HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, RESET);
+	 	 			HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, SET);
+	 	 			display7SEG(3);
+	 	 			break;
+	 	 		 case 4 :
+	 	 			HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, SET);
+	 	 			HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
+	 	 			HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
+	 	 			HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, RESET);
+	 	 			display7SEG(0);
+	 	 			break;
+	 	 		 default :
+	 	 			 break;
+	 	 		 }
 
-	 }
-
+	 	 	 }
+	 	 	 if(timer3_flag==1)
+	 	 	 {
+	 	 		 settimer3(100);
+	 	 		 HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+	 	 	 }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -324,14 +348,17 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, led_red_Pin|en1_Pin|en2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, DOT_Pin|led_red_Pin|en1_Pin|en2_Pin
+                          |en3_Pin|en4_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, chana_Pin|chanb_Pin|chanc_Pin|chand_Pin
                           |chane_Pin|chanf_Pin|chang_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : led_red_Pin en1_Pin en2_Pin */
-  GPIO_InitStruct.Pin = led_red_Pin|en1_Pin|en2_Pin;
+  /*Configure GPIO pins : DOT_Pin led_red_Pin en1_Pin en2_Pin
+                           en3_Pin en4_Pin */
+  GPIO_InitStruct.Pin = DOT_Pin|led_red_Pin|en1_Pin|en2_Pin
+                          |en3_Pin|en4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
