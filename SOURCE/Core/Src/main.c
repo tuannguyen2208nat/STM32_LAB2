@@ -196,7 +196,6 @@ int main(void)
   switch ( index )
   {
   case 0:
-  // Display the first 7 SEG with led_buffer [0]
 	  HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, RESET);
 	  HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
 	  HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
@@ -224,6 +223,8 @@ int main(void)
   break ;
   }
   }
+  int index_led;
+  int led_buffer[4] = {1 , 2 , 3 , 4};
    const int MAX_LED=4;
    int hour = 15 , minute = 8 , second = 50;
    void updateClockBuffer ()
@@ -239,6 +240,7 @@ int main(void)
   	  led_buffer[2] = minute_tens;
   	  led_buffer[3] = minute_ones;
     }
+
    settimer1(25);
    settimer2(100);
   while (1)

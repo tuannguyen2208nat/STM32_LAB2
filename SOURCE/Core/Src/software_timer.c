@@ -11,8 +11,7 @@ int timer1_counter=0;
 int timer1_flag=0;
 int timer2_counter=0;
 int timer2_flag=0;
-int index_led;
-int led_buffer[4] = {1 , 2 , 3 , 4};
+
 
 void settimer1(int duration)
 {

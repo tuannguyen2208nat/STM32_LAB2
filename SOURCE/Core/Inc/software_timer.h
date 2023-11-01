@@ -10,8 +10,6 @@
 
 extern int timer1_flag;
 extern int timer2_flag;
-extern int index_led;
-extern int led_buffer[4];
 void settimer1();
 void settimer2();
 void timerrun();
