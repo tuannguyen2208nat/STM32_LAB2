@@ -93,9 +93,6 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  const int MAX_LED = 4;
-   int index_led = 0;
-   int led_buffer [4] = {1 , 2 , 3 , 4};
 
    if (period_count % 2 == 0)
    {
@@ -425,9 +422,32 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+const int MAX_LED = 4;
+int timer_counter=30;
+int timer_counter1=100;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	timerrun();
+	if(timer_counter>0){timer_counter--;}
+	else
+	{
+		if((index_led+1)<=MAX_LED)
+		{
+			HAL_GPIO_TogglePin(led_red_GPIO_Port, led_red_Pin);
+			update7SEG(index_led);
+			display7SEG(led_buffer[index_led]);
+			index_led++;
+			timer_counter=30;
+		}
+		else
+		{
+			index_led=0;
+		}
+	}
+	if(timer_counter1>0){timer_counter1--;}
+	if(timer_counter1<=0)
+	{
+		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+	}
 }
 /* USER CODE END 4 */
 

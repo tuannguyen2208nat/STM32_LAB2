@@ -15,7 +15,8 @@ int timer3_counter=0;
 int timer3_flag=0;
 int period_count = 0;
 int status=0;
-
+int index_led=0;
+int led_buffer [4] = {1 , 2 , 3 , 4};
 
 void settimer1(int duration)
 {
