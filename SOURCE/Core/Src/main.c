@@ -93,6 +93,33 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  const int MAX_LED_MATRIX = 8;
+  int index_led_matrix = 0;
+  uint8_t matrix_buffer[8] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+
+  void updateLEDMatrix(int index) {
+      switch (index) {
+          case 0:
+              // Define the pattern for displaying "A" at index 0
+              matrix_buffer[0] = 0b00111100;
+              matrix_buffer[1] = 0b01100110;
+              matrix_buffer[2] = 0b11000011;
+              matrix_buffer[3] = 0b11000011;
+              matrix_buffer[4] = 0b11111111;
+              matrix_buffer[5] = 0b11000011;
+              matrix_buffer[6] = 0b11000011;
+              matrix_buffer[7] = 0b00000000;
+              break;
+          // Define patterns for other indices if needed
+
+          default:
+              // Default case, clear the matrix_buffer
+              for (int i = 0; i < MAX_LED_MATRIX; i++) {
+                  matrix_buffer[i] = 0x00;
+              }
+              break;
+      }
+  }
 
   void display7SEG(int n)
    {
@@ -243,45 +270,57 @@ int main(void)
 
    settimer1(25);
    settimer2(100);
+   settimer3(25);
   while (1)
   {
-	  if( timer1_flag == 1)
+	  if(timer1_flag == 1)
 	  {
-	   settimer1 (25) ;
-	  if( index_led + 1 <= MAX_LED )
+	 		  settimer1(25);
+	 		  if(index_led + 1 <= MAX_LED) {
+	 		  HAL_GPIO_TogglePin(led_red_GPIO_Port, led_red_Pin);
+	 		  update7SEG(index_led);
+	 		  display7SEG(led_buffer[index_led]);
+	 		  index_led++;
+	 		  }
+	 		  if(index_led + 1 > MAX_LED) {
+	 			  index_led = 0;
+	 		  }
+	 	  }
+	 	  if(timer2_flag == 1)
+	 	  {
+	 		  settimer2(100);
+	 		  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+	 		  second++;
+	 		  if(second >= 60)
+	 		  {
+	 			  second = 0;
+	 			  minute++;
+	 		  }
+	 		  if(minute >= 60)
+	 		  {
+	 			  minute = 0;
+	 			  hour++;
+	 		  }
+	 		  if(hour >= 24)
+	 		  {
+	 			  hour = 0;
+	 		  }
+	 		  updateClockBuffer();
+
+	 	  }
+	  if(timer3_flag == 1)
 	  {
-	  HAL_GPIO_TogglePin ( led_red_GPIO_Port , led_red_Pin ) ;
-	  update7SEG ( index_led ) ;
-	  display7SEG ( led_buffer [ index_led ]) ;
-	  index_led ++;
+	   settimer3(25);
+	 		  if(index_led_matrix + 1 <= MAX_LED_MATRIX) {
+	 			  updateLEDMatrix(index_led_matrix);
+	 			  index_led_matrix++;
+	 		  }
+	 		  if(index_led_matrix + 1> MAX_LED_MATRIX)
+	 		  {
+	 			  index_led_matrix = 0;
+	 		  }
 	  }
-	  if( (index_led + 1) > MAX_LED )
-	  {
-	  index_led = 0;
-	  }
-	  }
-	  if(timer2_flag==1)
-	  {
-		 settimer2 (100) ;
-	     HAL_GPIO_TogglePin ( DOT_GPIO_Port , DOT_Pin ) ;
-	     second ++;
-      if ( second >= 60)
-      {
-       second = 0;
-       minute ++;
-      }
-     if( minute >= 60)
-     {
-     minute = 0;
-     hour ++;
-    }
-    if( hour >=24)
-    {
-     hour = 0;
-    }
-   updateClockBuffer () ;
   }
- }
   /* USER CODE END 3 */
 }
 
