@@ -191,17 +191,11 @@ int main(void)
 
    	}
    }
-  const int MAX_LED = 4;
-  int index_led = 0;
-  int led_buffer [4] = {1 , 2 , 3 , 4};
-
-
-  void update7SEG ( int index )
+  void update7SEG (int index )
   {
   switch ( index )
   {
   case 0:
-  // Display the first 7 SEG with led_buffer [0]
 	  HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, RESET);
 	  HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
 	  HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
@@ -229,63 +223,29 @@ int main(void)
   break ;
   }
   }
-
-   settimer1(100);
-   settimer2(50);
-   settimer3(100);
+  int index_led;
+  int led_buffer[4] = {1 , 2 , 3 , 4};
+  const int MAX_LED=4;
+   settimer1(25);
+   settimer2(100);
   while (1)
   {
-    /* USER CODE END WHILE */
-	  if(timer1_flag==1)
-	 	 	 {
-	 	 		 settimer1(100);
-	 	 		 HAL_GPIO_TogglePin(led_red_GPIO_Port, led_red_Pin);
-	 	 	 }
-	 	 	 if(timer2_flag==1)
-	 	 	 {
-	 	 		 settimer2(50);
-	 	 		 switch (status)
-	 	 		 {
-	 	 		 case 1 :
-	 	 			 HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, RESET);
-	 	 			 HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
-	 	 			 HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
-	 	 			 HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, SET);
-	 	 			 display7SEG(1);
-	 	 			 break;
-	 	 		 case 2 :
-	 	 			 HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, SET);
-	 	 			 HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, RESET);
-	 	 			 HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
-	 	 			 HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, SET);
-	 	 			 display7SEG(2);
-	 	 			 break;
-	 	 		 case 3 :
-	 	 			HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, SET);
-	 	 			HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
-	 	 			HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, RESET);
-	 	 			HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, SET);
-	 	 			display7SEG(3);
-	 	 			break;
-	 	 		 case 4 :
-	 	 			HAL_GPIO_WritePin(en1_GPIO_Port,en1_Pin, SET);
-	 	 			HAL_GPIO_WritePin(en2_GPIO_Port,en2_Pin, SET);
-	 	 			HAL_GPIO_WritePin(en3_GPIO_Port,en3_Pin, SET);
-	 	 			HAL_GPIO_WritePin(en4_GPIO_Port,en4_Pin, RESET);
-	 	 			display7SEG(0);
-	 	 			break;
-	 	 		 default :
-	 	 			 break;
-	 	 		 }
-
-	 	 	 }
-	 	 	 if(timer3_flag==1)
-	 	 	 {
-	 	 		 settimer3(100);
-	 	 		 HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-	 	 	 }
-    /* USER CODE BEGIN 3 */
-  }
+	  if( timer1_flag == 1)
+	  {
+	   settimer1 (25) ;
+	  if( index_led + 1 <= MAX_LED )
+	  {
+	  HAL_GPIO_TogglePin ( led_red_GPIO_Port , led_red_Pin ) ;
+	  update7SEG ( index_led ) ;
+	  display7SEG ( led_buffer [ index_led ]) ;
+	  index_led ++;
+	  }
+	  if( (index_led + 1) > MAX_LED )
+	  {
+	  index_led = 0;
+	  }
+	  }
+ }
   /* USER CODE END 3 */
 }
 
@@ -416,26 +376,9 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-const int MAX_LED = 4;
-int timer_counter=10;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	if(timer_counter>0){timer_counter--;}
-	else
-	{
-		if((index_led+1)<=MAX_LED)
-		{
-			HAL_GPIO_TogglePin(led_red_GPIO_Port, led_red_Pin);
-			update7SEG(index_led);
-			display7SEG(led_buffer[index_led]);
-			index_led++;
-			timer_counter=25;
-		}
-		else
-		{
-			index_led=0;
-		}
-	}
+	timerrun();
 }
 /* USER CODE END 4 */
 
