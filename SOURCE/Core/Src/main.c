@@ -234,6 +234,21 @@ int main(void)
 
    	}
    }
+  int hour = 15 , minute = 8 , second = 50;
+
+  void updateClockBuffer ()
+  {
+
+	  int hour_tens = hour / 10;
+	  int hour_ones = hour % 10;
+	  int minute_tens = minute / 10;
+	  int minute_ones = minute % 10;
+
+	  led_buffer[0] = hour_tens;
+	  led_buffer[1] = hour_ones;
+	  led_buffer[2] = minute_tens;
+	  led_buffer[3] = minute_ones;
+  }
 
 
    settimer1(100);
